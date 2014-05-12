@@ -27,6 +27,7 @@
 
 #include "libcsv.h"
 
+const char *version = "0.1";
 const double sample_time = 0.082;
 const char *ignore_fields[5] = { "LogID", "LogEntryDate", "LogEntryTime", "LogEntrySeconds", "LogNotes" };
 const int colors[18] =
@@ -179,7 +180,9 @@ int main(int argc, char *argv[])
 	//check arguments
 	if(argc != 3)
 	{
-		printf("usage: evolog <input csv path> <output dif path>\n");
+		printf("evoscan_logworks_conv <version %s>\n", version);
+		printf("bholland@brandon-holland.com, @640774n6\n\n");
+		printf("usage: evoscan_logworks_conv <input csv path> <output dif path>\n");
 		return 1;
 	}
 
