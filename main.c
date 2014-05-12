@@ -31,24 +31,24 @@ const double sample_time = 0.082;
 const char *ignore_fields[5] = { "LogID", "LogEntryDate", "LogEntryTime", "LogEntrySeconds", "LogNotes" };
 const int colors[18] =
 {
-	13369344,	//red
-	204,		//blue
-	52224,		//green
-	16776960,	//yellow
-	16750848,	//orange
-	10053120,	//brown
-	10027161,	//purple
-	16751052,	//pink
-	6684672,	//dark red
-	102,		//dark blue
-	26112,		//dark green
-	8421376,	//dark yellow
-	11683584,	//dark orange
-	4993792,	//dark brown
-	4980812,	//dark purple
-	15108700,	//dark peach
-	9737364,	//grey
-	0,			//black
+	13369344,  //red
+	204,       //blue
+	52224,     //green
+	16776960,  //yellow
+	16750848,  //orange
+	10053120,  //brown
+	10027161,  //purple
+	16751052,  //pink
+	6684672,   //dark red
+	102,       //dark blue
+	26112,     //dark green
+	8421376,   //dark yellow
+	11683584,  //dark orange
+	4993792,   //dark brown
+	4980812,   //dark purple
+	15108700,  //dark peach
+	9737364,   //grey
+	0,         //black
 };
 
 int csv_col, csv_row;
