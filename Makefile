@@ -8,4 +8,4 @@ libcsv.o: libcsv.c
 	gcc -std=c99 -c libcsv.c
 
 clean:
-	-rm *.o evoscan_logworks_conv
+	-rm *.o evoscan_logworks_conv*
