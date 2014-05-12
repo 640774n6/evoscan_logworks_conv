@@ -1,9 +1,9 @@
 //
-// What:    evoscan_logworks_conv - main.c
-// Why:     Converts Evoscan CSV to Logworks DIF
-// Who:     Brandon Holland (bholland@brandon-holland.com, @640774n6)
+// What:	evoscan_logworks_conv - main.c
+// Why:		Converts Evoscan CSV to Logworks DIF
+// Who:		Brandon Holland (bholland@brandon-holland.com, @640774n6)
 // Where:	http://brandon-holland.com
-// When:    May 11, 2014
+// When:	May 11, 2014
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
