@@ -78,6 +78,40 @@ int should_ignore_field(char *field)
 	return 0;
 }
 
+char *create_output_path(char *input_path)
+{
+	int input_length = strlen(input_path);
+	int extension_idx = 0;
+	for(int i = 0; i < input_length; i++)
+	{
+		if(input_path[i] == '.')
+		{ extension_idx = i; }
+	}
+	
+	char *new_path = NULL;
+	if(extension_idx > 0)
+	{
+		int new_length = extension_idx + 4;
+		new_path = (char *)malloc(sizeof(char) * new_length);
+		strncpy(new_path, input_path, extension_idx);
+		new_path[extension_idx] = '.';
+		new_path[extension_idx + 1] = 'd';
+		new_path[extension_idx + 2] = 'i';
+		new_path[extension_idx + 3] = 'f';
+	}
+	else
+	{
+		int new_length = input_length + 4;
+		new_path = (char *)malloc(sizeof(char) * new_length);
+		strcpy(new_path, input_path);
+		new_path[input_length] = '.';
+		new_path[input_length + 1] = 'd';
+		new_path[input_length + 2] = 'i';
+		new_path[input_length + 3] = 'f';
+	}
+	return new_path;
+}
+
 int color_for_index(int i)
 {
 	int c = i % 18;
@@ -178,19 +212,22 @@ void csv_process_row(int c, void *tmp_file)
 int main(int argc, char *argv[])
 {
 	//check arguments
-	if(argc != 3)
+	if(argc < 2 || argc > 3)
 	{
 		printf("evoscan_logworks_conv <version %s>\n", version);
 		printf("bholland@brandon-holland.com, @640774n6\n\n");
-		printf("usage: evoscan_logworks_conv <input csv path> <output dif path>\n");
+		printf("usage: evoscan_logworks_conv <input csv path> <output dif path (optional)>\n");
 		return 1;
 	}
 
 	char *input_path = argv[1];
-	char *output_path = argv[2];
+	char *generated_output_path = create_output_path(input_path);
+	char *output_path = (argc == 3) ? argv[2] : generated_output_path;
+	
 	if(!strcmp(input_path, output_path))
 	{
 		printf("error: input and output path must be different\n");
+		free(generated_output_path);
 		return 1;
 	}
 	
@@ -199,6 +236,7 @@ int main(int argc, char *argv[])
 	if(!input_file)
 	{
 		printf("error: failed to open input @ %s\n", input_path);
+		free(generated_output_path);
 		return 1;
 	}
 	
@@ -206,6 +244,7 @@ int main(int argc, char *argv[])
 	if(!output_path)
 	{
 		printf("error: failed to open output @ %s\n", output_path);
+		free(generated_output_path);
 		fclose(input_file);
 		return 1;
 	}
@@ -214,6 +253,7 @@ int main(int argc, char *argv[])
 	if(!tmp_file)
 	{
 		printf("error: failed to open tmp file\n");
+		free(generated_output_path);
 		fclose(input_file);
 		fclose(output_file);
 		return 1;
@@ -246,6 +286,7 @@ int main(int argc, char *argv[])
 		if(csv_parse(&parser, buffer, length, csv_process_col, csv_process_row, tmp_file) != length)
 		{
 			printf("error: failed to read from input @ %s\n", input_path);
+			free(generated_output_path);
 			fclose(input_file);
 			fclose(output_file);
 			fclose(tmp_file);
@@ -333,6 +374,9 @@ int main(int argc, char *argv[])
 	
 	//write footer
 	fprintf(output_file, "-1,0\r\nEOD\r\n");
+	
+	//free generated output path
+	free(generated_output_path);
 	
 	//free fields
 	for(int i = 0; i < field_count; i++)
